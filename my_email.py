@@ -1,6 +1,9 @@
+
 #!/usr/bin/env python
 # Feiyang Xue
-# example: echo "hello world" | python my_email.py
+# i use this script for notification purpose when running certain job on certain system.
+# please do not abuse this script
+# example: echo "hello world" | python my_email.py --addrfrom "your email addr" --addrto "your email addr" 
 
 import sys, datetime, argparse, re, smtplib
 from email.mime.multipart import MIMEMultipart
