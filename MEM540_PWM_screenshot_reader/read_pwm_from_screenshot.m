@@ -12,6 +12,8 @@ Fs = 627 / 0.002 ; % num_pixels / timespan
 gpu = false;
 plot1 = true; % raw pic
 plot2 = false; % intermediate pics
+th_anchor = 2; % threshold for finding anchor. euclidean distance in RGB space, 0-255.
+th_voltage = 0.02; % threshold for finding each voltage/color in HSV space, 0-1.
 
 [pathstr,name,ext] = fileparts(path_to_pic);
 fprintf('%s%s\n', name, ext);
@@ -21,8 +23,8 @@ count = 0; ACropColor = {}; AColor = {};
 for color = (map * 255)'
     count = count + 1; ACropCh = {}; ACh = {};
     for ch = [1:3]
-        ACropCh{ch} = abs( A3(:,:,ch) - color(ch) ) < 1;
-        ACh{ch} = abs( A(:,:,ch) - color(ch) ) < 1;
+        ACropCh{ch} = abs( A3(:,:,ch) - color(ch) ) < th_anchor;
+        ACh{ch} = abs( A(:,:,ch) - color(ch) ) < th_anchor;
     end
     ACropColor{count} = uint32( ACropCh{1} .* ACropCh{2} .* ACropCh{3});
     AColor{count} = uint32( ACh{1} .* ACh{2} .* ACh{3} );
@@ -75,7 +77,7 @@ B = rgb2hsv(B_raw);
 results = [];
 sig = {}; itp = {}; bin_pic = {};
 for color = {B_blue, B_white}
-    bin_pic{end+1} = cmp_pic_to_c_3d( B, color{1}, 0.02 );  
+    bin_pic{end+1} = cmp_pic_to_c_3d( B, color{1}, th_voltage);  
     [sig{end+1}, itp{end+1}] = get_sig_from_pic(bin_pic{end}, 0.25);
 end
 sig_lookedup = {};
@@ -89,6 +91,14 @@ i = 0;
 for color = {B_blue, B_white}
     i = i + 1;
     sig = sig_lookedup{i};
+    if (max(sig) - min(sig)) < 4
+        disp('vertical difference is less than 5 pixels. skip');
+        r = struct(); r.sig = sig; r.dc = []; r.dc_med = []; 
+        r.color = color{1}; r.color_ind = length(results) + 1;
+        r.pathstr = pathstr; r.name = name; r.ext = ext;
+        results = [results; r];
+        continue
+    end
     if plot2
         figure; title(sprintf('[%.2f %.2f %.2f]',color{1})); 
         subplot(2,1,1); imshow(bin_pic{i}); 
@@ -103,12 +113,7 @@ for color = {B_blue, B_white}
         legend('overall signal', 'interpolated points'); axis equal;
         title(sprintf('[%.2f %.2f %.2f]',color{1}));
     end
-    if (max(sig) - min(sig)) > 4
-        figure; dutycycle(sig, Fs, 'Tolerance', 5); dc = ans
-    else
-        disp('vertical difference is less than 5 pixels. skip DC');
-        dc = [];
-    end
+    figure; dutycycle(sig, Fs, 'Tolerance', 5); dc = ans
     r = struct(); r.sig = sig; r.dc = dc; r.dc_med = median(dc); 
     r.color = color{1}; r.color_ind = length(results) + 1;
     % r.path = path_to_pic; 
@@ -207,4 +212,9 @@ function [sig itp] = offset_zeros(sig, itp)
     if ~isempty(itp)
         itp(:,1) = itp(:,1) - nonzero_begin_ind + 1;
     end
+end
+
+function [pic] = get_anchor_pic()
+
+
 end
