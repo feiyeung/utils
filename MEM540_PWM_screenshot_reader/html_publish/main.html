@@ -1,0 +1,317 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>main</title><meta name="generator" content="MATLAB 9.2"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-23"><meta name="DC.source" content="main.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% main</span>
+[FILENAME, PATHNAME, FILTERINDEX] = <span class="keyword">...</span>
+    uigetfile(<span class="string">'*.*'</span>, <span class="string">'select pics'</span>, <span class="string">'MultiSelect'</span>,<span class="string">'on'</span>);
+<span class="keyword">if</span> FILTERINDEX &gt; 0
+    results = [];    close <span class="string">all</span>;
+    <span class="keyword">if</span> ~iscell(FILENAME)
+        FILENAME = {FILENAME};
+    <span class="keyword">end</span>
+    <span class="keyword">for</span> name = sort(FILENAME)
+        r = read_pwm_from_screenshot([PATHNAME, name{1}]);
+        results = [results; r];
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">-10.PNG
+
+dc =
+
+    0.5558    0.5495
+
+
+dc =
+
+    0.4564    0.4539
+
+-100.PNG
+vertical difference is less than 5 pixels. skip DC
+vertical difference is less than 5 pixels. skip DC
+-20.PNG
+
+dc =
+
+    0.5975    0.5999
+
+
+dc =
+
+    0.4025    0.4033
+
+-30.PNG
+
+dc =
+
+    0.6474    0.6536
+
+
+dc =
+
+    0.3516    0.3491
+
+-40.PNG
+
+dc =
+
+    0.6989    0.6929
+
+
+dc =
+
+    0.2975    0.2992
+
+-50.PNG
+
+dc =
+
+    0.7531    0.7531
+
+
+dc =
+
+    0.2469    0.2469
+
+-60.PNG
+
+dc =
+
+    0.7951    0.7905
+
+
+dc =
+
+    0.1946    0.2001
+
+-70.PNG
+
+dc =
+
+    0.8458    0.8579
+
+
+dc =
+
+    0.1535    0.1474
+
+-80.PNG
+
+dc =
+
+    0.9077    0.9074
+
+
+dc =
+
+    0.0923    0.1012
+
+-90.PNG
+
+dc =
+
+    0.9528    0.9602
+
+
+dc =
+
+    0.0540    0.0500
+
+0.PNG
+
+dc =
+
+    0.4925    0.4957
+
+
+dc =
+
+    0.5062    0.5062
+
+10.PNG
+
+dc =
+
+    0.4539    0.4538
+
+
+dc =
+
+    0.5450    0.5461
+
+100.PNG
+vertical difference is less than 5 pixels. skip DC
+vertical difference is less than 5 pixels. skip DC
+20.PNG
+
+dc =
+
+    0.4026
+
+
+dc =
+
+    0.6049    0.5995
+
+30.PNG
+
+dc =
+
+    0.3525    0.3523
+
+
+dc =
+
+    0.6484    0.6505
+
+40.PNG
+
+dc =
+
+    0.3018
+
+
+dc =
+
+    0.7000    0.6991
+
+50.PNG
+
+dc =
+
+    0.2469    0.2552
+
+
+dc =
+
+    0.7414    0.7531
+
+60.PNG
+
+dc =
+
+    0.1945    0.1937
+
+
+dc =
+
+    0.8030    0.8017
+
+70.PNG
+
+dc =
+
+    0.1571    0.1529
+
+
+dc =
+
+    0.8429    0.8449
+
+80.PNG
+
+dc =
+
+    0.1022    0.1025
+
+
+dc =
+
+    0.8953    0.8953
+
+90.PNG
+
+dc =
+
+    0.0541    0.0500
+
+
+dc =
+
+    0.9482    0.9476
+
+</pre><img vspace="5" hspace="5" src="main_01.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_02.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_03.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_04.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_05.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_06.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_07.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_08.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_09.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_10.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_11.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_12.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_13.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_14.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_15.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_16.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_17.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_18.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_19.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_20.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_21.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_22.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_23.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_24.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_25.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_26.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_27.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_28.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_29.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_30.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_31.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_32.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_33.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_34.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_35.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_36.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_37.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_38.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_39.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_40.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_41.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_42.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_43.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_44.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_45.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_46.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_47.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_48.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_49.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_50.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_51.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_52.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_53.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_54.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_55.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_56.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_57.png" style="width:714px;height:320px;" alt=""> <img vspace="5" hspace="5" src="main_58.png" style="width:560px;height:420px;" alt=""> <img vspace="5" hspace="5" src="main_59.png" style="width:560px;height:420px;" alt=""> <pre class="codeinput">close <span class="string">all</span>;
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% main
+[FILENAME, PATHNAME, FILTERINDEX] = ...
+    uigetfile('*.*', 'select pics', 'MultiSelect','on');
+if FILTERINDEX > 0
+    results = [];    close all;
+    if ~iscell(FILENAME)
+        FILENAME = {FILENAME};
+    end
+    for name = sort(FILENAME)
+        r = read_pwm_from_screenshot([PATHNAME, name{1}]);
+        results = [results; r];
+    end
+end
+
+%%
+close all;
+##### SOURCE END #####
+--></body></html>
