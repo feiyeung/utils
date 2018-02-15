@@ -34,6 +34,10 @@ B = read_checksum(args.B)
 A_chksum = [i[0] for i in A]
 B_chksum = [i[0] for i in B]
 
+# todo: sort checksum and use binary search
+# todo: find duplicates
+# todo: check for collisions
+
 f = open('A_not_in_B.txt', 'w');
 f.write('# in "%s" but not in "%s"\n' % (args.A, args.B))
 for chksum, path in A:

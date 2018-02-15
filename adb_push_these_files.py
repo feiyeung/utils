@@ -1,4 +1,4 @@
-import argparse, subprocess, os
+import argparse, subprocess, os, platform
 
 parser = argparse.ArgumentParser(
     description='generate '
@@ -15,8 +15,15 @@ cwd = os.getcwd()
 with open(args.file_list) as f:
     for line in f:
         if not line.startswith('#'):
-            if os.path.isfile(line.strip()):
-                cmd = 'adb push "%s" "%s"' % (os.path.join(cwd, line.strip()), args.target_path)
+            line = line.strip()
+            if platform.system() is 'Windows':
+                line_host = line.replace('/', '\\')
+            else:
+                line_host = line
+            if os.path.isfile(line):
+                cmd = 'adb push "%s" "%s"' % (
+                    os.path.join(cwd, line_host), 
+                    os.path.join(args.target_path, line).replace('\\','/'))
                 subprocess.call(cmd)
             else:
                 print('this line does not point to a file %s' % line)
