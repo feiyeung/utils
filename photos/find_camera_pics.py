@@ -18,7 +18,7 @@ parser.add_argument('--tag',
 )
 parser.add_argument('--val',
     help='expected values for the tag, comma seperated, OR''ed, case insensitive',
-    default='canon,olympus,nikon,sony'
+    default='canon,eos,rx100,nikon,dmc-fz30,dsc-t1'
 )
 
 args = parser.parse_args();
@@ -61,7 +61,7 @@ def process_files(file_list, tar_tag, tar_vals):
                     candidates.append(val)
                 for tar_val in tar_vals:
                     if tar_val in val:
-                        file_hits.append(path)
+                        file_hits.append('%s # %s' % (path, val))
                         break
             else:
                 file_notag.append(path)
