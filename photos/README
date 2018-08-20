@@ -1,0 +1,9 @@
+brief introduction of what i want to achieve here
+organizae a directory full of pictures and videos such that
+ 1. files have consistant date and time in its creation/modified datetime, exif info, filename
+ 2. file are in directires of <year>/<month>
+ 3. de-duplicate files with identical binary contents
+ 4. de-duplicate files before and after further compression (keep the file of bigger size)
+ 5. remove extra surfix in filename due to duplicate now or in the past (e.g. IMG_1.jpeg and IMG_1 (2).jpg)
+ 6. locate unidentified files and ask user for further action(s)
+ 
