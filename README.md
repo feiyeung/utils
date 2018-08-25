@@ -1,7 +1,7 @@
 # utils
 scripts for my convenience 
 
-======
+--------------
 
 example of obatining a list of sha1sum to JPEG and PNG files (by extension)
 
